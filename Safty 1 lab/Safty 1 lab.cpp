@@ -2,19 +2,52 @@
 //
 
 #include <iostream>
-
+#include <fstream>
+#include <sstream>
+#include <string>
+#include<vector>
+#include <charconv>
+using namespace std;
 int main()
 {
-    std::cout << "Hello World!\n";
+    int i,j,q;
+    char buther;
+    string msg, buf, kolvo, ono,prov;
+    ifstream input("in.txt");
+    ofstream output("out.txt");
+    getline(input, kolvo);
+    int n = atoi(kolvo.c_str());
+    vector<string> vec(n);
+    vector<int> otv(n);
+    for (i = 0; i < n; i++) {
+        getline(input, buf);
+        vec[i] = buf;
+    }
+    getline(input, msg);
+    vector<int> chisla(20);
+    for (i = 1;i < 26;i++)
+    {
+        for (j = 0; j < n; j++)
+        {
+            buf = vec[j];
+            for (q = 0; q < vec[j].length(); q++)
+            {
+                chisla[q] = buf[q];
+                chisla[q] += i;
+                if (chisla[q] > 90) {
+                    chisla[q] -= 26;
+                    if (chisla[q] == 64) chisla[q] = 32;
+                }
+                buther = chisla[q];
+                ono+=buther;
+            }
+            for (q = 0; q < (msg.length() - vec[j].length()); q++)
+            {
+                prov = msg.substr(q, ono.length());
+                if (prov == ono) otv.push_back(i);
+            }
+            ono.clear();
+        }
+    }
+    
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
