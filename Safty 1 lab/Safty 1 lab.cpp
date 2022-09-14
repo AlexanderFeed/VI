@@ -18,13 +18,14 @@ int main()
     getline(input, kolvo);
     int n = atoi(kolvo.c_str());
     vector<string> vec(n);
-    vector<int> otv(n);
+    vector<int> otv(msg.length());
     for (i = 0; i < n; i++) {
         getline(input, buf);
         vec[i] = buf;
     }
     getline(input, msg);
     vector<int> chisla(20);
+    vector<int> kon(200);
     for (i = 1;i < 26;i++)
     {
         for (j = 0; j < n; j++)
@@ -41,7 +42,7 @@ int main()
                 buther = chisla[q];
                 ono+=buther;
             }
-            for (q = 0; q < (msg.length() - vec[j].length()); q++)
+            for (q = 0; q <=(msg.length() - vec[j].length()); q++)
             {
                 prov = msg.substr(q, ono.length());
                 if (prov == ono) otv.push_back(i);
@@ -49,5 +50,35 @@ int main()
             ono.clear();
         }
     }
-    
+    int kashka[30];
+    for (i = 0; i < 30; i++)
+    {
+        kashka[i] = 0;
+    }
+    for (i = 0; i < otv.size(); i++)
+    {
+        kashka[otv[i]] ++;
+    }
+    int max = -1;
+    int index = -1;
+    for (i = 0; i < 30; i++)
+    {
+        if (kashka[i] > max)max = kashka[i], index = i;
+    }
+    for (i = 0; i < msg.length(); i++)
+    {
+        kon[i] = msg[i];
+    }
+    for ( i = 0; i < msg.length(); i++)
+    {
+        kon[i] -= otv[index];
+        if (kon[i] == 64) kon[i] = 32;
+        else if (kon[i] == 31) kon[i] = 90;
+    }
+    for (i = 0; i < msg.length(); i++)
+    {
+        buther = kon[i];
+        ono += buther;
+    }
+    output << ono;
 }
