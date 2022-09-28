@@ -1,20 +1,83 @@
-﻿// lab 2.0.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <list>
+#include <fstream>
+#include <string>
+using namespace std;
 
-#include <iostream>
+bool IsSimple(int a)
+{
+	int k = 1;
+	if (a == 1)
+		return false;
+
+	for (int i = 1; i <= sqrt(a); i++)
+		if (a % i == 0)
+			k++;
+
+	if (k == 2)
+		return true;
+	else
+		return false;
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	string code;
+	string strSimple = "";
+	string strNotSimple = "";
+	int shift = 0;
+	int quantitySimple = 0;
+	int strLength;
+
+	ifstream in("in.txt");
+
+	if (in.is_open()) {
+		in >> shift;
+		getline(in, code);
+		getline(in, code);
+	}
+
+	in.close();
+	strLength = code.length();
+
+	for (int i = 1; i <= code.length(); i++)
+		if (IsSimple(i))
+			quantitySimple++;
+
+	for (int ish = 0; ish < shift; ish++)
+	{
+		strSimple = "";
+		strNotSimple = "";
+
+		for (int i = 0; i < quantitySimple; i++)
+			strSimple.push_back(code[i]);
+
+		for (int i = quantitySimple; i < code.length(); i++)
+			strNotSimple.push_back(code[i]);
+
+		int iS = 0;
+		int iNS = 0;
+		code = "";
+
+		for (int i1 = 1; i1 <= strLength; i1++)
+		{
+			if (IsSimple(i1))
+			{
+				code.push_back(strSimple[iS]);
+				iS++;
+			}
+			else
+			{
+				code.push_back(strNotSimple[iNS]);
+				iNS++;
+			}
+		}
+	}
+	fstream out("out.txt");
+	out << code;
+	out.close();
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+
+
