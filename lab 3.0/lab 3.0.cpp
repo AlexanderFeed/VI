@@ -116,17 +116,13 @@ int main()
 }
 
 bool IsSimple(int a) {
-    int k = 1;
 
     if (a == 1)
         return false;
 
-    for (int i = 1; i <= sqrt(a); i++)
+    for (int i = 2; i <= sqrt(a); i++)
         if (a % i == 0)
-            k++;
+            return false;
 
-    if (k == 2)
-        return true;
-    else
-        return false;
+    return true;
 }

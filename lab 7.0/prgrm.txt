@@ -1,0 +1,6 @@
+cco = 'O+' image_1
+cco = 'O+' image_4
+cco = 'O+' image_1
+cds = 'S-' image_5
+cds = 'S-' image_6
+ccs = 'S+' image_4
